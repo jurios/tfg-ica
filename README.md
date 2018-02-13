@@ -1,5 +1,7 @@
 # Treball Final de Grau: Il·luminació a les carreteres autònomes
 
+# ![](demo.png)
+
 ## Resum
 
 La constant millora i aparició de nous components de maquinari acompanyat amb noves
