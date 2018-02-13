@@ -1,0 +1,16 @@
+<aside id="aside" class="app-aside hidden-xs bg-dark">
+    <div class="aside-wrap">
+      <div class="navi-wrap">
+        <!-- nav -->
+        <nav ui-nav class="navi clearfix">
+          <ul class="nav">
+            <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+              <span>Navigation</span>
+            </li>
+            <app-collapse-menu-item *ngFor="let item of menuItems" itemTitle="{{item.title}}" [subItems]="item.subtitles"></app-collapse-menu-item>
+          </ul>
+        </nav>
+        <!-- nav -->
+      </div>
+    </div>
+</aside>

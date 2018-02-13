@@ -1,0 +1,16 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm">
+  <div class="col">
+    <app-page-header title="Dispositius" [button]="pageHeaderButton"></app-page-header>
+    <div class="wrapper-md">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Taula Dispositius actius
+        </div>
+        <app-devices-table [devices]="devices" (onDeviceSelected)="onDeviceSelected($event)"></app-devices-table>
+      </div>
+    </div>
+  </div>
+  <div class="col w-xxl bg-white-only b-l bg-auto no-border-xs" *ngIf="selectedDevice">
+    <app-device-detail [device]="selectedDevice" (deviceDeletedEvent)="onDeviceDeleted()"></app-device-detail>
+  </div>
+</div>

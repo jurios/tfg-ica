@@ -1,0 +1,23 @@
+.m-t-sm {
+  margin-top: 28px !important;
+}
+.device-header-container {
+  height: 200px;
+}
+
+.device-header-title {
+  position: absolute;
+  width: 100%;
+  top: 70px;
+  padding-left: 100px;
+  text-shadow: 1px 1px 4px black;
+}
+
+.map-background{
+  background-color: rgba(0,0,0,0.2);
+  position: relative;
+  width: 100%;
+  height: 200px;
+  top: -200px;
+  box-shadow: inset 0px 5px 20px rgba(0,0,0,0.3)
+}

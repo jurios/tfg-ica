@@ -1,0 +1,164 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm" *ngIf="segment">
+  <div class="col">
+    <div class="segment-header-container">
+      <app-map [greenLights]="marks"></app-map>
+      <div class="map-background"></div>
+      <div class="wrapper-lg segment-header-title">
+        <div class="row m-t">
+          <div class="col-sm-7">
+            <a href class="thumb-lg pull-left m-r">
+              <img src="assets/img/avatar_002.jpg" class="img-circle">
+            </a>
+            <div class="clear m-b">
+              <div class="m-b m-t-sm">
+                <div class="h3 text-white">Segment {{segment.id}}</div>
+                <small class="text-white">{{segment.segment_id}}</small>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-5">
+            <div class="pull-right pull-none-xs text-center">
+              <a href class="m-b-md inline m" *ngIf="segment.devices">
+                <span class="h3 block font-bold">{{segment.devices.length}}</span>
+                <small>Dispositius</small>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wrapper bg-white b-b">
+      <ul class="nav nav-pills nav-sm">
+
+        <li [ngClass]="{active: tabView.dashboard === true}">
+          <a (click)="onSelectTab('dashboard')">
+            Panel General
+          </a>
+        </li>
+
+        <li [ngClass]="{active: tabView.devices === true}">
+          <a (click)="onSelectTab('devices')">
+            Faroles
+          </a>
+        </li>
+
+        <li [ngClass]="{active: tabView.rules === true}">
+          <a (click)="onSelectTab('rules')">
+            Polítiques
+          </a>
+        </li>
+
+        <li [ngClass]="{active: tabView.simulator === true}">
+          <a (click)="onSelectTab('simulator')">
+            Simulador
+          </a>
+        </li>
+
+      </ul>
+    </div>
+    <div class="padder" *ngIf="tabView.dashboard">
+    </div>
+    <div class="padder" *ngIf="tabView.devices">
+      <div class="wrapper-md">
+        <div class="panel panel-default">
+          <div class="panel-heading centered">
+            <h1>Dispositius actius</h1>
+          </div>
+          <app-devices-table
+            [devices]="segment.devices"
+            (onDeviceSelected)="onDeviceSelected($event)"
+          ></app-devices-table>
+        </div>
+      </div>
+    </div>
+    <div class="padder" *ngIf="tabView.rules">
+      <div class="wrapper-md">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="panel panel-default">
+              <div class="panel-heading centered">
+                <h1>Polítiques assignades al segment</h1>
+              </div>
+              <app-rules-table
+                [segment]="segment"
+              ></app-rules-table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="padder" *ngIf="tabView.simulator">
+      <div class="wrapper-md">
+        <div class="row">
+          <div class="col-md-12">
+              <app-segment-simulator
+                [segment]="segment"
+                [params]="params"
+                [simulatorStatus]="simulatorStatus"
+              ></app-segment-simulator>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col w-xxl bg-white-only b-l bg-auto no-border-xs" *ngIf="selectedDevice">
+    <app-device-detail [device]="selectedDevice"></app-device-detail>
+  </div>
+  <div class="col w-xxl bg-white-only b-l bg-auto no-border-xs" *ngIf="tabView.simulator">
+    <form [formGroup]="simulatorParams" novalidate="">
+      <div class="row">
+        <div class="col-md-12">
+          <button type="button" class="btn btn-danger btn-block" *ngIf="simulatorStatus" (click)="onSimulatorStatusChange(0)">Aturar simulador</button>
+          <button type="button" class="btn btn-info btn-block" *ngIf="!simulatorStatus" (click)="onSimulatorStatusChange(1)">Engegar simulador</button>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="checkbox">
+                <label class="i-checks">
+                  <input type="checkbox" formControlName="time" >
+                  <i></i>
+                  Definir hora de la simulació
+                </label>
+              </div>
+              <h4 *ngIf="simulatorParams.value.time"> Hora </h4>
+            </div>
+            <div class="col-md-6" *ngIf="simulatorParams.value.time">
+              <div class="input-group m-b col-md-12">
+                <input type="text" class="form-control" value="0" formControlName="hours">
+                <span class="input-group-addon">hores</span>
+              </div>
+            </div>
+            <div class="col-md-6" *ngIf="simulatorParams.value.time">
+              <div class="input-group m-b col-md-12">
+                <input type="text" class="form-control" value="0" formControlName="minutes">
+                <span class="input-group-addon">minuts</span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <h4> Condicionals climatològics </h4>
+            </div>
+            <label class="col-md-6 control-label">
+              <div class="checkbox">
+                <label class="i-checks">
+                  <input type="checkbox" formControlName="raining" >
+                  <i></i>
+                  Pluja
+                </label>
+              </div>
+            </label>
+            <label class="col-md-6 control-label">
+              <div class="checkbox">
+                <label class="i-checks">
+                  <input type="checkbox" formControlName="fog" >
+                  <i></i>
+                  Boira
+                </label>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

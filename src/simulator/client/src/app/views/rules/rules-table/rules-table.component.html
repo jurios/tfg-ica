@@ -1,0 +1,73 @@
+<div class="row wrapper">
+  <div class="col-sm-5 m-b-xs">
+    <select class="input-sm form-control w-sm inline v-middle">
+      <option value="0">Bulk action</option>
+      <option value="1">Delete selected</option>
+      <option value="2">Bulk edit</option>
+      <option value="3">Export</option>
+    </select>
+    <button class="btn btn-sm btn-default">Apply</button>
+  </div>
+  <div class="col-sm-4">
+  </div>
+  <div class="col-sm-2" *ngIf="segment">
+    <a class="btn btn-sm btn-success right" type="button"
+      routerLink="/segments/{{segment.id}}/rules/new">
+      <i class="fa fa-plus" aria-hidden="true"></i>
+      Afegir una política
+    </a>
+  </div>
+  <div class="col-sm-2" *ngIf="device">
+    <a class="btn btn-sm btn-success right" type="button"
+      routerLink="/devices/{{device.id}}/rules/new">
+      <i class="fa fa-plus" aria-hidden="true"></i>
+      Afegir una política
+    </a>
+  </div>
+</div>
+<div class="table-responsive">
+  <table class="table table-striped b-t b-light">
+    <thead>
+      <tr>
+        <td> # </td>
+        <td class="centered"> Prioritat </td>
+        <td class="centered"> Mod. Intensitat </td>
+        <td class="centered"> Hibernació </td>
+        <td class="centered"> Activada </td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let rule of rules">
+        <td>{{rule.id}}</td>
+        <td class="centered">{{rule.priority}}</td>
+        <td class="centered">
+          <span *ngIf="rule.inherit_intensity == true">
+            <span class="label label-info">heretada</span>
+          </span>
+          <span *ngIf="rule.inherit_intensity == false">
+            <span>{{rule.intensity_sign}}</span>
+            <span>{{rule.intensity}}</span>
+            <span *ngIf="rule.intensity_value=='percentual'">%</span>
+          </span>
+        </td>
+        <td class="centered">
+          <span *ngIf="rule.inherit_hibernate">
+            <span class="label label-info">heretada</span>
+          </span>
+          <span *ngIf="!rule.inherit_hibernate">
+            <span *ngIf="rule.allow_hibernate">
+              <i class="fa fa-check"></i> ({{rule.delay_hibernate}})
+            </span>
+            <span *ngIf="!rule.allow_hibernate">
+              <i class="fa fa-times"></i>
+            </span>
+          </span>
+        </td>
+        <td class="centered">
+          <i class="fa fa-check" *ngIf="rule.enabled"></i>
+          <i class="fa fa-times" *ngIf="!rule.enabled"></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

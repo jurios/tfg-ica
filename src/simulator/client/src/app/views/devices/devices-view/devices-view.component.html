@@ -1,0 +1,84 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm" *ngIf="device">
+  <div class="col">
+    <div class="device-header-container">
+      <app-map [greenLights]="marks"></app-map>
+      <div class="map-background"></div>
+      <div class="wrapper-lg device-header-title">
+        <div class="row m-t">
+          <div class="col-sm-7">
+            <a href class="thumb-lg pull-left m-r">
+              <img src="assets/img/avatar_001.jpg" class="img-circle">
+            </a>
+            <div class="clear m-b">
+              <div class="m-b m-t-sm">
+                <div class="h3 text-white">Dispositiu {{device.serial_id}}</div>
+                <small class="text-white" *ngIf="segment">Segment: {{segment.segment_id}} - </small>
+                <small class="text-white" *ngIf="device.address">{{device.address}}</small>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-5">
+            <div class="pull-right pull-none-xs text-center">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wrapper bg-white b-b">
+      <ul class="nav nav-pills nav-sm">
+
+        <li [ngClass]="{active: tabView.dashboard === true}">
+          <a (click)="onSelectTab('dashboard')">
+            Panel General
+          </a>
+        </li>
+
+        <li [ngClass]="{active: tabView.rules === true}">
+          <a (click)="onSelectTab('rules')">
+            Polítiques
+          </a>
+        </li>
+
+        <li [ngClass]="{active: tabView.simulator === true}">
+          <a (click)="onSelectTab('simulator')">
+            Simulador
+          </a>
+        </li>
+
+      </ul>
+    </div>
+    <div class="padder" *ngIf="tabView.dashboard">
+    </div>
+    <div class="padder" *ngIf="tabView.rules">
+      <div class="wrapper-md">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="panel panel-default">
+              <div class="panel-heading centered">
+                <h1>Polítiques assignades al dispositiu</h1>
+              </div>
+              <app-rules-table [device]="device"></app-rules-table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="padder" *ngIf="tabView.simulator">
+      <div class="wrapper-md">
+        <div class="row">
+          <div class="col-md-12">
+              <app-device-simulator></app-device-simulator>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col w-xxl bg-white-only b-l bg-auto no-border-xs" *ngIf="tabView.simulator">
+    <div class="row">
+      <div class="col-md-12">
+        <button type="button" class="btn btn-danger btn-block" *ngIf="simulatorStatus" (click)="onSimulator(0)">Aturar simulador</button>
+        <button type="button" class="btn btn-info btn-block" *ngIf="!simulatorStatus" (click)="onSimulator(1)">Engegar simulador</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+.display {
+    display: block !important;
+}
+
+.fadeInLeft {
+  -webkit-animation-duration: 0.2s !important;
+  -moz-animation-duration: 0.2s !important;
+}

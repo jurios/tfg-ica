@@ -1,0 +1,54 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm">
+  <div class="col">
+    <app-page-header title="Segments de carretera" [button]="pageHeaderButton"></app-page-header>
+    <div class="wrapper-md">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Taula de Segments de la Xarxa de Carreteres
+        </div>
+        <div class="row wrapper">
+          <div class="col-sm-5 m-b-xs">
+            <select class="input-sm form-control w-sm inline v-middle">
+              <option value="0">Bulk action</option>
+              <option value="1">Delete selected</option>
+              <option value="2">Bulk edit</option>
+              <option value="3">Export</option>
+            </select>
+            <button class="btn btn-sm btn-default">Apply</button>
+          </div>
+          <div class="col-sm-4">
+          </div>
+          <div class="col-sm-3">
+            <div class="input-group">
+              <input type="text" class="input-sm form-control" placeholder="Search">
+              <span class="input-group-btn">
+                <button class="btn btn-sm btn-default" type="button">Go!</button>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-striped b-t b-light">
+            <thead>
+              <tr>
+                <td> # </td>
+                <td class="centered"> ID </td>
+                <td class="centered"> DISPOSITIUS </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let segment of segments" (click)="onSegmentSelected(segment)">
+                <td>{{segment.id}}</td>
+                <td class="centered">{{segment.segment_id}}</td>
+                <td class="centered">{{segment.devices.length}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col w-xxl bg-white-only b-l bg-auto no-border-xs" *ngIf="segmentSelected">
+    <app-segments-detail [segment]="segmentSelected"></app-segments-detail>
+  </div>
+</div>

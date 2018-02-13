@@ -1,0 +1,340 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm">
+  <div class="col">
+    <app-page-header title="Afegir un nou segment"></app-page-header>
+    <div class="wrapper-md">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Formulari de creació d'una nova política
+        </div>
+        <div class="panel-body">
+          <form [formGroup]="ruleForm" novalidate="">
+            <div class="row">
+              <div class="col-md-12">
+                <h2>Estat i Prioritat</h2>
+                <hr>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group col-md-3">
+                  <label>Prioritat</label>
+                  <input type="number" class="form-control" placeholder="100"
+                    formControlName="priority"
+                  >
+                </div>
+                <div class="form-group col-md-3">
+                  <label></label>
+                  <div class="radio">
+                    <label class="i-checks">
+                      <input type="radio" [checked]="device != null" disabled >
+                      <i></i>
+                      Grup de prioritat del dispositiu
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group col-md-3">
+                  <label></label>
+                  <div class="radio">
+                    <label class="i-checks">
+                      <input type="radio" [checked]="segment != null" disabled >
+                      <i></i>
+                      Grup de prioritat del segment
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group col-md-3">
+                  <label></label>
+                  <div class="checkbox">
+                    <label class="i-checks">
+                      <input type="checkbox" formControlName="preference" >
+                      <i></i>
+                      Grup de prioritat de preferència
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group col-md-12">
+                  <label>Estat de la política</label>
+                  <select class="form-control" formControlName="enabled">
+                    <option value="true">Habilitada</option>
+                    <option value="false">Deshabilitada</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-10">
+                <h2> Hibernació </h2>
+              </div>
+              <div class="right col-md-2 hibernate-control">
+                <div class="form-group">
+                  <label class="col-sm-8 control-label">
+                    Heretar
+                  </label>
+                  <div class="col-sm-4">
+                    <label class="i-switch m-t-xs m-r">
+                      <input type="checkbox"
+                        formControlName="inherit_hibernate"
+                      >
+                      <i></i>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="row" *ngIf="!this.ruleForm.value.inherit_hibernate">
+              <div class="col-md-6 col-md-offset-3">
+                <div class="form-group">
+                  <label class="col-sm-10 control-label">
+                    Permetre hibernar en el segment
+                  </label>
+                  <div class="col-sm-2">
+                    <label class="i-switch m-t-xs m-r">
+                      <input type="checkbox" formControlName="allow_hibernate" >
+                      <i></i>
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group" *ngIf="ruleForm.value.allow_hibernate">
+                  <label class="col-sm-10 control-label">
+                    Permetre hibernar totalment en el segment
+                  </label>
+                  <div class="col-sm-2">
+                    <label class="i-switch m-t-xs m-r">
+                      <input type="checkbox"
+                        formControlName="total_hibernate"
+                      >
+                      <i></i>
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group" *ngIf="ruleForm.value.allow_hibernate">
+                  <label class="col-sm-8 control-label">
+                    Temps per entrar en hibernació
+                  </label>
+                  <div class="input-group m-b col-sm-4">
+                    <input type="text" class="form-control"
+                      formControlName="delay_hibernate"
+                    >
+                    <span class="input-group-addon">segons</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-10">
+                <h2> Modificador del llum </h2>
+              </div>
+              <div class="right col-md-2 hibernate-control">
+                <div class="form-group">
+                  <label class="col-sm-8 control-label">
+                    Heretar
+                  </label>
+                  <div class="col-sm-4">
+                    <label class="i-switch m-t-xs m-r">
+                      <input type="checkbox"
+                        formControlName="inherit_intensity"
+                      >
+                      <i></i>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="row" *ngIf="!ruleForm.value.inherit_intensity">
+              <div class="col-md-6 col-md-offset-3">
+                <div class="form-group">
+                  <label class="col-sm-8 control-label">
+                    Basat en
+                  </label>
+                  <div class="col-sm-4">
+                    <select class="form-control" formControlName="intensity_based_on">
+                      <option value="intensity">Intensitat</option>
+                      <option value="lumens">Lumens</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group"
+                  *ngIf="ruleForm.value.intensity_based_on=='intensity'"
+                >
+                  <label class="col-sm-5 control-label">
+                    Intensitat
+                  </label>
+                  <!--<div class="col-sm-2">
+                    <select class="form-control"
+                    formControlName="intensity_sign">
+                    <option value="+" >+</option>
+                    <option value="-">-</option>
+                  </select>
+                </div>-->
+                  <div class="col-sm-3">
+                    <input type="number" class="form-control"
+                    formControlName="intensity"
+                  >
+                  </div>
+                  <div class="col-sm-2">
+                    <select class="form-control"
+                    formControlName="intensity_value">
+                    <option value="absolute">Absolut</option>
+                    <option value="percentual">%</option>
+                  </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-10">
+                <h2> Horaris </h2>
+              </div>
+              <div class="right col-md-2 hibernate-control">
+                <div class="form-group">
+                  <label class="col-sm-8 control-label">
+                    Heretar
+                  </label>
+                  <div class="col-sm-4">
+                    <label class="i-switch m-t-xs m-r">
+                      <input type="checkbox"
+                        formControlName="inherit_schedule"
+                      >
+                      <i></i>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="row" *ngIf="!ruleForm.value.inherit_schedule">
+              <div class="col-md-10 col-md-offset-1">
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">
+                    Data activació de política
+                  </label>
+                  <div class="col-sm-4">
+                    <div class="input-group m-b col-sm-4">
+                      <input type="text" class="form-control" formControlName="start_rule_hours" value="0">
+                      <span class="input-group-addon">hores</span>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="input-group m-b col-sm-4">
+                      <input type="text" class="form-control" formControlName="start_rule_minutes" value="0">
+                      <span class="input-group-addon">minuts</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">
+                    Data desactivació de política
+                  </label>
+                  <div class="col-sm-4">
+                    <div class="input-group m-b col-sm-4">
+                      <input type="text" class="form-control" formControlName="end_rule_hours" value="0">
+                      <span class="input-group-addon">hores</span>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="input-group m-b col-sm-4">
+                      <input type="text" class="form-control" formControlName="end_rule_minutes" value="0">
+                      <span class="input-group-addon">minuts</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-10">
+                <h2> Condicionals climatològics </h2>
+              </div>
+              <div class="right col-md-2 hibernate-control">
+                <div class="form-group">
+                  <label class="col-sm-8 control-label">
+                    Heretar
+                  </label>
+                  <div class="col-sm-4">
+                    <label class="i-switch m-t-xs m-r">
+                      <input type="checkbox"
+                        formControlName="inherit_weather"
+                      >
+                      <i></i>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="row" *ngIf="!ruleForm.value.inherit_weather">
+              <div class="col-md-6 col-md-offset-3">
+                <div class="form-group row">
+                  <label class="col-md-4 control-label">
+                    <div class="checkbox">
+                      <label class="i-checks">
+                        <input type="checkbox" formControlName="enabled_raining" >
+                        <i></i>
+                        Pluja
+                      </label>
+                    </div>
+                  </label>
+                  <div class="col-md-4" *ngIf="ruleForm.value.enabled_raining">
+                    <label>
+                      <input type="radio" name="raining" id="raining1" formControlName="raining" value="true">
+                      Activar quan SI plou
+                    </label>
+                  </div>
+                  <div class="col-md-4" *ngIf="ruleForm.value.enabled_raining">
+                    <label>
+                      <input type="radio" name="raining" id="raining2" formControlName="raining" value="false" checked>
+                      Activar quan NO plou
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-md-offset-3">
+                <div class="form-group row">
+                  <label class="col-md-4 control-label">
+                    <div class="checkbox">
+                      <label class="i-checks">
+                        <input type="checkbox" formControlName="enabled_fog" >
+                        <i></i>
+                        Boira
+                      </label>
+                    </div>
+                  </label>
+                  <div class="col-md-4" *ngIf="ruleForm.value.enabled_fog">
+                    <label>
+                      <input type="radio" name="fog" id="fog1" formControlName="fog" value="true">
+                      Activar quan SI hi ha boira
+                    </label>
+                  </div>
+                  <div class="col-md-4" *ngIf="ruleForm.value.enabled_fog">
+                    <label>
+                      <input type="radio" name="fog" id="fog2" formControlName="fog" value="false" checked>
+                      Activar quan NO hi ha boira
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <hr>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <div class="col-md-2">
+                    <button type="button" class="btn btn-sm btn-danger right" (click)="onCancel()">Tornar</button>
+                  </div>
+                  <div class="col-md-2 col-md-offset-8">
+                    <button type="submit" class="btn btn-sm btn-primary" (click)="onSubmit()">Crear política</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

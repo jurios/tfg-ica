@@ -1,0 +1,26 @@
+<li [class.active]="!isCollapsed">
+  <a class="auto" (click)="isCollapsed = !isCollapsed">
+    <span class="pull-right text-muted">
+      <i class="fa fa-fw fa-angle-right text"></i>
+      <i class="fa fa-fw fa-angle-down text-active"></i>
+    </span>
+    <i class="glyphicon glyphicon-stats icon text-primary-dker"></i>
+    <span class="font-bold">{{itemTitle}}</span>
+  </a>
+  <ul class="nav nav-sub dk animated" [class.display]="!isCollapsed"
+      (collapsed)="collapsed($event)"
+      (expanded)="expanded($event)"
+      [collapse]="isCollapsed">
+    <li class="nav-sub-header animated"
+        *ngFor="let subItem of subItems"
+        [class.display]="!isCollapsed"
+        [class.fadeInLeft]="!isCollapsed"
+        routerLink="{{subItem.route}}"
+        routerLinkActive="active"
+      >
+      <a routerLink="{{subItem.route}}">
+        {{subItem.title}}
+      </a>
+    </li>
+  </ul>
+</li>

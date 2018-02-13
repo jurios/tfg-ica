@@ -1,0 +1,8 @@
+tr.inactive {
+  opacity: 0.2;
+}
+
+.result-map-container {
+  width: 100%;
+  height: 200px;
+}

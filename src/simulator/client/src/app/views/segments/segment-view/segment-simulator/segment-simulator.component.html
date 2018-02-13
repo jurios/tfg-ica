@@ -1,0 +1,102 @@
+<div class="row" *ngIf="!simulatorEnabled">
+  <div class="col-md-12">
+    <div class="alert alert-danger centered" role="alert">
+      <strong> Atenció:</strong> No està llançant cap simulació.
+    </div>
+  </div>
+</div>
+<div class="row" *ngIf="simulatorEnabled">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading centered">
+        <h1>Mapa de l'estat final de la simulació</h1>
+      </div>
+      <div class="result-map-container">
+        <app-map [onLights]="resultMapMarks.on" [offLights]="resultMapMarks.off"></app-map>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading centered">
+        <h1 *ngIf="!deviceSelected">Polítiques assignades al segment</h1>
+        <h1 *ngIf="deviceSelected">Polítiques assignades a la farola {{deviceSelected.serial_id}}</h1>
+      </div>
+      <div class="row wrapper">
+        <div class="col-sm-5 m-b-xs">
+          <select class="input-sm form-control w-sm inline v-middle" (change)="onTableFilterChanged($event)">
+            <option value="segment">Segment {{segment.segment_id}}</option>
+            <option value="{{device.serial_id}}" *ngFor="let device of segment.devices">Farola {{device.serial_id}}</option>
+          </select>
+          <button class="btn btn-sm btn-default">Apply</button>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-striped b-t b-light">
+          <thead>
+            <tr>
+              <td> # </td>
+              <td class="centered"> Mod. Intensitat </td>
+              <td class="centered"> Hibernació </td>
+              <td class="righted"> Grup de prioritat </td>
+              <td class="centered"> Prioritat </td>
+              <td class="centered"> Horari </td>
+              <td class="centered"> Activada </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let resultRule of displayedResultRules" [ngClass]="{inactive: resultRule.active == false}" title="{{resultRule.observation}}">
+              <td>{{resultRule.rule.id}}</td>
+              <td class="centered">
+                <span *ngIf="resultRule.rule.inherit_intensity == true">
+                  <span class="label label-info">heretada</span>
+                </span>
+                <span *ngIf="resultRule.rule.inherit_intensity == false">
+                  <span>{{resultRule.rule.intensity_sign}}</span>
+                  <span>{{resultRule.rule.intensity}}</span>
+                  <span *ngIf="resultRule.rule.intensity_value=='percentual'">%</span>
+                </span>
+              </td>
+              <td class="centered">
+                <span *ngIf="resultRule.rule.inherit_hibernate">
+                  <span class="label label-info">heretada</span>
+                </span>
+                <span *ngIf="!resultRule.rule.inherit_hibernate">
+                  <span *ngIf="resultRule.rule.allow_hibernate">
+                    <i class="fa fa-check"></i> ({{resultRule.rule.delay_hibernate}})
+                  </span>
+                  <span *ngIf="!resultRule.rule.allow_hibernate">
+                    <i class="fa fa-times"></i>
+                  </span>
+                </span>
+              </td>
+              <td class="righted">
+                <span class="label label-sm label-success" *ngIf="resultRule.rule.preference">preferent</span>
+                <span class="label label-sm label-warning" *ngIf="resultRule.rule.segment_id">Segment</span>
+                <span class="label label-sm label-primary" *ngIf="resultRule.rule.device_id">Dispositiu</span>
+              </td>
+              <td class="centered">
+                {{resultRule.rule.priority}}
+              </td>
+              <td class="centered">
+                <div *ngIf="!resultRule.rule.inherit_schedule">
+                  <div><i class="fa fa-clock-o"></i> <span *ngIf="resultRule.rule.start_rule_hours < 10">0</span>{{resultRule.rule.start_rule_hours}} : <span *ngIf="resultRule.rule.start_rule_minutes < 10">0</span>{{resultRule.rule.start_rule_minutes}}</div>
+                  <div><i class="fa fa-clock-o"></i> <span *ngIf="resultRule.rule.end_rule_hours < 10">0</span>{{resultRule.rule.end_rule_hours}} : <span *ngIf="resultRule.rule.end_rule_minutes < 10">0</span>{{resultRule.rule.end_rule_minutes}}</div>
+                </div>
+                <div *ngIf="resultRule.rule.inherit_schedule">
+                  <span class="label label-info">heretada</span>
+                </div>
+              </td>
+              <td class="centered">
+                <i class="fa fa-check" *ngIf="resultRule.rule.enabled"></i>
+                <i class="fa fa-times" *ngIf="!resultRule.rule.enabled"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
