@@ -1,5 +1,9 @@
 # Treball Final de Grau: Il·luminació a les carreteres autònomes
 
+En aquest projecte es desenvolupa un simulador que aplica el sistema de polítiques
+definit en el treball per tal de determinar el comportament de les faroles en funció
+de l'entorn en una ciutat intel·ligent.
+
 # ![](demo.png)
 
 ## Resum
